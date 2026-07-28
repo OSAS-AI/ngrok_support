@@ -19,6 +19,8 @@ if __name__ == "__main__":
     parser.add_argument("--disconnect", action="store_true", help="Disconnect all tunnels")
     args = parser.parse_args()
 
+    print(f"Config: port={args.port} host={args.host} type={args.type} bind_host={args.bind_host or '(none)'}")
+
     if args.disconnect:
         disconnect_ngrok()
         print("Disconnected all ngrok tunnels.")
