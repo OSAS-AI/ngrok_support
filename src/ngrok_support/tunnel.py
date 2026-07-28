@@ -6,6 +6,8 @@ def connect_ngrok(addr: int = 11434,
                   host_header: str = "localhost:11434",
                   auth_token: str | None = None,
                   bind_host: str | None = None) -> str:
+    ngrok.kill()
+
     if auth_token:
         conf.get_default().auth_token = auth_token
 
@@ -25,17 +27,3 @@ def connect_ngrok(addr: int = 11434,
 
 def disconnect_ngrok() -> None:
     ngrok.kill()
-
-
-if __name__ == "__main__":
-    import argparse
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--port", type=int, default=11434)
-    parser.add_argument("--disconnect", action="store_true")
-    args = parser.parse_args()
-    if args.disconnect:
-        disconnect_ngrok()
-        print("Disconnected all ngrok tunnels.")
-    else:
-        url = connect_ngrok(addr=args.port)
-        print(f"Your service is now accessible at: {url}")

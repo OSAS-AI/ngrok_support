@@ -6,16 +6,22 @@ from src.ngrok_support.tunnel import connect_ngrok, disconnect_ngrok
 
 
 class TestConnectNgrok:
-    @patch("src.ngrok_support.tunnel.conf")
     @patch("src.ngrok_support.tunnel.ngrok")
-    def test_connect_sets_auth_token(self, mock_ngrok, mock_conf):
+    def test_connect_kills_existing_process(self, mock_ngrok):
+        mock_ngrok.connect.return_value.public_url = "https://abc.ngrok.io"
+        connect_ngrok(addr=11434)
+        mock_ngrok.kill.assert_called_once_with()
+
+    @patch("src.ngrok_support.tunnel.ngrok")
+    @patch("src.ngrok_support.tunnel.conf")
+    def test_connect_sets_auth_token(self, mock_conf, mock_ngrok):
         mock_ngrok.connect.return_value.public_url = "https://abc.ngrok.io"
         connect_ngrok(addr=11434, auth_token="my_token")
         assert mock_conf.get_default.return_value.auth_token == "my_token"
 
-    @patch("src.ngrok_support.tunnel.conf")
     @patch("src.ngrok_support.tunnel.ngrok")
-    def test_connect_skips_auth_when_none(self, mock_ngrok, mock_conf):
+    @patch("src.ngrok_support.tunnel.conf")
+    def test_connect_skips_auth_when_none(self, mock_conf, mock_ngrok):
         mock_ngrok.connect.return_value.public_url = "https://abc.ngrok.io"
         connect_ngrok(addr=11434, auth_token=None)
         mock_conf.get_default.assert_not_called()

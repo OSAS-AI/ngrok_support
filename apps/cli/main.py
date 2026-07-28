@@ -1,5 +1,6 @@
 import sys
 import os
+import time
 from pathlib import Path
 sys.path.append(str(Path(__file__).parents[2]))
 
@@ -33,3 +34,10 @@ if __name__ == "__main__":
             bind_host=args.bind_host or None,
         )
         print(f"Your service is now accessible at: {url}")
+        print("Press Ctrl+C to stop...")
+        try:
+            while True:
+                time.sleep(1)
+        except KeyboardInterrupt:
+            print("\nStopping ngrok...")
+            disconnect_ngrok()
