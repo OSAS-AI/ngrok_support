@@ -23,4 +23,4 @@ if __name__ == "__main__":
         print("Disconnected all ngrok tunnels.")
     else:
         url = connect_ngrok(port=args.port, proto=args.type, host_header=f"{args.host}:{args.port}", auth_token=args.auth_token)
-        print(f"Ollama is now accessible at: {url}")
+        print(f"Your service is now accessible at: {url}")
