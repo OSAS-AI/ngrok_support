@@ -46,14 +46,21 @@ class TestConnectNgrok:
         mock_ngrok.connect.return_value.public_url = "https://abc.ngrok.io"
         connect_ngrok(addr=11434, bind_host="192.168.1.1")
         mock_ngrok.connect.assert_called_once_with(
-            addr=11434, proto="http", host_header="localhost:11434",
-            bind_host="http://192.168.1.1"
+            addr="192.168.1.1:11434", proto="http", host_header="localhost:11434"
         )
 
     @patch("src.ngrok_support.tunnel.ngrok")
     def test_connect_skips_bind_host_for_localhost(self, mock_ngrok):
         mock_ngrok.connect.return_value.public_url = "https://abc.ngrok.io"
         connect_ngrok(addr=11434, bind_host="localhost")
+        mock_ngrok.connect.assert_called_once_with(
+            addr=11434, proto="http", host_header="localhost:11434"
+        )
+
+    @patch("src.ngrok_support.tunnel.ngrok")
+    def test_connect_skips_bind_host_for_loopback(self, mock_ngrok):
+        mock_ngrok.connect.return_value.public_url = "https://abc.ngrok.io"
+        connect_ngrok(addr=11434, bind_host="127.0.0.1")
         mock_ngrok.connect.assert_called_once_with(
             addr=11434, proto="http", host_header="localhost:11434"
         )
