@@ -22,10 +22,10 @@ TUNNEL_TYPE=http
 ### CLI
 
 ```bash
-python apps/cli/connect.py
-python apps/cli/connect.py --port 8080
-python apps/cli/connect.py --port 8080 --host localhost --auth-token xxx --type http
-python apps/cli/connect.py --disconnect
+python apps/cli/main.py
+python apps/cli/main.py --port 8080
+python apps/cli/main.py --port 8080 --host localhost --auth-token xxx --type http
+python apps/cli/main.py --disconnect
 ```
 
 ### As a library
