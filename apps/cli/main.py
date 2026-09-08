@@ -36,8 +36,13 @@ if __name__ == "__main__":
         print(f"Your service is now accessible at: {url}")
         print("Press Ctrl+C to stop...")
         try:
+            start = time.time()
             while True:
                 time.sleep(1)
+                elapsed = int(time.time() - start)
+                mins, secs = divmod(elapsed, 60)
+                print(f"\rTime elapsed: {mins:02d}:{secs:02d}   ", end="", flush=True)
+                        
         except KeyboardInterrupt:
             print("\nStopping ngrok...")
             disconnect_ngrok()
