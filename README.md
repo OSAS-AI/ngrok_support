@@ -11,7 +11,7 @@ pip install -r requirements/requirements.txt
 Configure `secrets/.env`:
 
 ```env
-NGROK_API_KEY=your_ngrok_auth_token
+NGROK_AUTH_TOKEN=your_ngrok_auth_token
 LOCAL_TUNNEL_HOST=127.0.0.1
 LOCAL_TUNNEL_PORT=11434
 TUNNEL_TYPE=http
